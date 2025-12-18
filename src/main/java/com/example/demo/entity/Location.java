@@ -34,5 +34,4 @@ private LocalDateTime installedAt = LocalDateTime.now();
 private Boolean isActive = true;
 
 
-// getters and setters
 }
