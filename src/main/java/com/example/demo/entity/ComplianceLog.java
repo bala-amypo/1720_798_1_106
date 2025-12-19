@@ -1,38 +1,38 @@
 package com.example.demo.entity;
 
-
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-
 @Entity
-@Table(name = "compliance_logs")
 public class ComplianceLog {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
+    @ManyToOne
+    private SensorReading sensorReading;
 
+    @ManyToOne
+    private ComplianceThreshold thresholdUsed;
 
-@OneToOne
-@JoinColumn(name = "sensor_reading_id", nullable = false)
-private SensorReading sensorReading;
+    private String statusAssigned;
+    private String remarks;
+    private LocalDateTime loggedAt = LocalDateTime.now();
 
+    public void setSensorReading(SensorReading sensorReading) {
+        this.sensorReading = sensorReading;
+    }
 
-@ManyToOne
-@JoinColumn(name = "threshold_id")
-private ComplianceThreshold thresholdUsed;
+    public void setThresholdUsed(ComplianceThreshold thresholdUsed) {
+        this.thresholdUsed = thresholdUsed;
+    }
 
+    public void setStatusAssigned(String statusAssigned) {
+        this.statusAssigned = statusAssigned;
+    }
 
-private String statusAssigned;
-
-
-private String remarks;
-
-
-private LocalDateTime loggedAt = LocalDateTime.now();
-
-
-// getters and setters
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
 }
