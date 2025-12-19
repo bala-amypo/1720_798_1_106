@@ -1,33 +1,29 @@
 package com.example.demo.entity;
 
-
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-
 @Entity
-@Table(name = "locations", uniqueConstraints = @UniqueConstraint(columnNames = "locationName"))
 public class Location {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
+    @Column(unique = true)
+    private String locationName;
 
+    private String description;
 
-@Column(nullable = false, unique = true)
-private String locationName;
+    private String region;
 
+    private LocalDateTime createdAt = LocalDateTime.now();
 
-private String description;
+    public Long getId() {
+        return id;
+    }
 
-
-@Column(nullable = false)
-private String region;
-
-
-private LocalDateTime createdAt = LocalDateTime.now();
-
-
-
+    public String getRegion() {
+        return region;
+    }
 }
