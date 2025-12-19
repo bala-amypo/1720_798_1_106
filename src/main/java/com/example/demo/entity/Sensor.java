@@ -1,38 +1,36 @@
 package com.example.demo.entity;
 
-
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-
 @Entity
-@Table(name = "sensors", uniqueConstraints = @UniqueConstraint(columnNames = "sensorCode"))
 public class Sensor {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
+    @Column(unique = true)
+    private String sensorCode;
 
+    private String sensorType;
 
-@Column(nullable = false, unique = true)
-private String sensorCode;
+    @ManyToOne
+    private Location location;
 
+    private LocalDateTime installedAt = LocalDateTime.now();
 
-@Column(nullable = false)
-private String sensorType;
+    private Boolean isActive = true;
 
+    public Long getId() {
+        return id;
+    }
 
-@ManyToOne
-@JoinColumn(name = "location_id", nullable = false)
-private Location location;
+    public String getSensorType() {
+        return sensorType;
+    }
 
-
-private LocalDateTime installedAt = LocalDateTime.now();
-
-
-private Boolean isActive = true;
-
-
-
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 }
