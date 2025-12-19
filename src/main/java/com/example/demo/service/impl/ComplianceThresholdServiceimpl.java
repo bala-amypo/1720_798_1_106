@@ -13,7 +13,7 @@ public class ComplianceThresholdServiceimpl implements ComplianceThresholdServic
     private final ComplianceThresholdRepository thresholdRepository;
 
     // ✅ Constructor order EXACT
-    public ComplianceThresholdServiceImpl(ComplianceThresholdRepository thresholdRepository) {
+    public ComplianceThresholdServiceimpl(ComplianceThresholdRepository thresholdRepository) {
         this.thresholdRepository = thresholdRepository;
     }
 

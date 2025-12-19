@@ -16,7 +16,7 @@ public class SensorServiceimpl implements SensorService {
     private final LocationRepository locationRepository;
 
     // ✅ Constructor order MUST match
-    public SensorServiceImpl(SensorRepository sensorRepository,
+    public SensorServiceimpl(SensorRepository sensorRepository,
                              LocationRepository locationRepository) {
         this.sensorRepository = sensorRepository;
         this.locationRepository = locationRepository;

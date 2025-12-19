@@ -17,7 +17,7 @@ public class SensorReadingServiceimpl implements SensorReadingService {
     private final SensorRepository sensorRepository;
 
     // ✅ Constructor order EXACT
-    public SensorReadingServiceImpl(SensorReadingRepository readingRepository,
+    public SensorReadingServiceimpl(SensorReadingRepository readingRepository,
                                     SensorRepository sensorRepository) {
         this.readingRepository = readingRepository;
         this.sensorRepository = sensorRepository;

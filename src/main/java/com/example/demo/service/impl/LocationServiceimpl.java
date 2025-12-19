@@ -13,7 +13,7 @@ public class LocationServiceimpl implements LocationService {
     private final LocationRepository locationRepository;
 
     // ✅ Constructor order EXACT
-    public LocationServiceImpl(LocationRepository locationRepository) {
+    public LocationServiceimpl(LocationRepository locationRepository) {
         this.locationRepository = locationRepository;
     }
 
