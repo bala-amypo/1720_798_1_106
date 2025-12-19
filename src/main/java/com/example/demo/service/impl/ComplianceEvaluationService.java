@@ -15,7 +15,7 @@ public class ComplianceEvaluationServiceimpl implements ComplianceEvaluationServ
     private final ComplianceLogRepository logRepository;
 
     // ✅ Constructor order EXACT
-    public ComplianceEvaluationServiceImpl(
+    public ComplianceEvaluationServiceimpl(
             SensorReadingRepository readingRepository,
             ComplianceThresholdRepository thresholdRepository,
             ComplianceLogRepository logRepository) {
