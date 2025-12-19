@@ -1,10 +1,11 @@
-package com.example.demo.service;
+package com.example.demo.service.impl;
 
 import com.example.demo.entity.Location;
 import com.example.demo.entity.Sensor;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.LocationRepository;
 import com.example.demo.repository.SensorRepository;
+import com.example.demo.service.SensorService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public class SensorServiceimpl implements SensorService {
     private final SensorRepository sensorRepository;
     private final LocationRepository locationRepository;
 
-    // ✅ Constructor order MUST match
+    // 👇 constructor name MUST be SAME as class name
     public SensorServiceimpl(SensorRepository sensorRepository,
                              LocationRepository locationRepository) {
         this.sensorRepository = sensorRepository;
@@ -25,8 +26,8 @@ public class SensorServiceimpl implements SensorService {
     @Override
     public Sensor createSensor(Long locationId, Sensor sensor) {
 
-        if (sensor.getSensorType() == null || sensor.getSensorType().isEmpty()) {
-            throw new IllegalArgumentException("sensorType is required");
+        if (sensor.getSensorType() == null) {
+            throw new IllegalArgumentException("sensorType required");
         }
 
         Location location = locationRepository.findById(locationId)
