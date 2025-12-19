@@ -11,7 +11,7 @@ public class ComplianceThreshold {
 
 
 @Id
-@GeneratedValue(strategy = GenberationType.IDENTITY)
+@GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long id;
 
 

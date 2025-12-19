@@ -1,29 +1,12 @@
-package com.example.demo.entity;
+package com.example.demo.repository;
 
-import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import com.example.demo.entity.ComplianceThreshold;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Entity
-@Table(
-    name = "compliance_thresholds",
-    uniqueConstraints = @UniqueConstraint(columnNames = "sensorType")
-)
-public class ComplianceThreshold {
+import java.util.Optional;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  // ✅ FIXED HERE
-    private Long id;
+public interface ComplianceThresholdRepository
+        extends JpaRepository<ComplianceThreshold, Long> {
 
-    @Column(nullable = false, unique = true)
-    private String sensorType;
-
-    private Double minValue;
-    private Double maxValue;
-
-    @Column(nullable = false)
-    private String severityLevel;
-
-    private LocalDateTime createdAt = LocalDateTime.now();
-
-    // getters and setters
+    Optional<ComplianceThreshold> findBySensorType(String type);
 }
