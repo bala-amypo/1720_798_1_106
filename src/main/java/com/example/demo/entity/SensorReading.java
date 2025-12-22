@@ -10,30 +10,29 @@ public class SensorReading {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Sensor sensor;
 
+    @Column(nullable = false)
     private Double readingValue;
+
+    @Column(nullable = false)
     private LocalDateTime readingTime;
-    private String status;
 
-    public Double getReadingValue() {
-        return readingValue;
-    }
+    private String status = "PENDING"; // default
 
-    public LocalDateTime getReadingTime() {
-        return readingTime;
-    }
+    // Getters and Setters
+    public Long getId() { return id; }
 
-    public Sensor getSensor() {
-        return sensor;
-    }
+    public Sensor getSensor() { return sensor; }
+    public void setSensor(Sensor sensor) { this.sensor = sensor; }
 
-    public void setSensor(Sensor sensor) {
-        this.sensor = sensor;
-    }
+    public Double getReadingValue() { return readingValue; }
+    public void setReadingValue(Double readingValue) { this.readingValue = readingValue; }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    public LocalDateTime getReadingTime() { return readingTime; }
+    public void setReadingTime(LocalDateTime readingTime) { this.readingTime = readingTime; }
+
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 }
