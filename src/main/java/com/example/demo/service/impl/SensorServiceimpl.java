@@ -7,6 +7,8 @@ import com.example.demo.repository.SensorRepository;
 import com.example.demo.service.SensorService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SensorServiceimpl implements SensorService {
 
@@ -26,5 +28,11 @@ public class SensorServiceimpl implements SensorService {
 
         sensor.setLocation(location);
         return sensorRepository.save(sensor);
+    }
+
+    // ✅ MISSING METHOD — NOW ADDED
+    @Override
+    public List<Sensor> getAllSensors() {
+        return sensorRepository.findAll();
     }
 }
