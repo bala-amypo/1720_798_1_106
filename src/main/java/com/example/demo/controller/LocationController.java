@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Location;
+import com.example.demo.entity.Location;
 import com.example.demo.service.LocationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
@@ -12,27 +12,24 @@ import java.util.List;
 @Tag(name = "Locations Endpoints")
 public class LocationController {
 
-    private final LocationService locationService;
+    private final LocationService service;
 
-    public LocationController(LocationService locationService) {
-        this.locationService = locationService;
+    public LocationController(LocationService service) {
+        this.service = service;
     }
 
-    // ✅ CREATE location (returns object with ID)
     @PostMapping
-    public Location createLocation(@RequestBody Location location) {
-        return locationService.createLocation(location);
+    public Location create(@RequestBody Location location) {
+        return service.createLocation(location);
     }
 
-    // ✅ GET all locations (returns list with IDs)
     @GetMapping
-    public List<Location> getAllLocations() {
-        return locationService.getAllLocations();
+    public List<Location> getAll() {
+        return service.getAllLocations();
     }
 
-    // ✅ GET location by ID
     @GetMapping("/{id}")
-    public Location getLocationById(@PathVariable Long id) {
-        return locationService.getLocationById(id);
+    public Location getById(@PathVariable Long id) {
+        return service.getLocationById(id);
     }
 }
