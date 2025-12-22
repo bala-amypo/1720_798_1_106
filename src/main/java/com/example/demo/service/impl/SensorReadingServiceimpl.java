@@ -1,4 +1,4 @@
-package com.example.demo.service;
+package com.example.demo.service.impl;
 
 import com.example.demo.entity.Sensor;
 import com.example.demo.entity.SensorReading;
@@ -11,12 +11,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class SensorReadingServiceImpl implements SensorReadingService {
+public class SensorReadingServiceimpl implements SensorReadingService {
 
     private final SensorReadingRepository readingRepository;
     private final SensorRepository sensorRepository;
 
-    public SensorReadingServiceImpl(SensorReadingRepository readingRepository,
+    public SensorReadingServiceimpl(SensorReadingRepository readingRepository,
                                     SensorRepository sensorRepository) {
         this.readingRepository = readingRepository;
         this.sensorRepository = sensorRepository;
