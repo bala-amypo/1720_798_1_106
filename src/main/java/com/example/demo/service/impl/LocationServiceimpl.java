@@ -1,33 +1,30 @@
-package com.example.demo.service;
+package com.example.demo.service.impl;
 
-import com.example.demo.model.Location;
+import com.example.demo.entity.Location;
+import com.example.demo.entity.Sensor;
 import com.example.demo.repository.LocationRepository;
+import com.example.demo.repository.SensorRepository;
+import com.example.demo.service.SensorService;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-public class LocationServiceimpl implements LocationService {
+public class SensorServiceimpl implements SensorService {
 
+    private final SensorRepository sensorRepository;
     private final LocationRepository locationRepository;
 
-    public LocationServiceimpl(LocationRepository locationRepository) {
+    public SensorServiceimpl(SensorRepository sensorRepository,
+                             LocationRepository locationRepository) {
+        this.sensorRepository = sensorRepository;
         this.locationRepository = locationRepository;
     }
 
     @Override
-    public Location createLocation(Location location) {
-        return locationRepository.save(location);
-    }
-
-    @Override
-    public List<Location> getAllLocations() {
-        return locationRepository.findAll();
-    }
-
-    @Override
-    public Location getLocationById(Long id) {
-        return locationRepository.findById(id)
+    public Sensor createSensor(Long locationId, Sensor sensor) {
+        Location location = locationRepository.findById(locationId)
                 .orElseThrow(() -> new RuntimeException("Location not found"));
+
+        sensor.setLocation(location);
+        return sensorRepository.save(sensor);
     }
 }
