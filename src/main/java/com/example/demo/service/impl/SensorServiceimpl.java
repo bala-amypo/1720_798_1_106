@@ -2,13 +2,10 @@ package com.example.demo.service.impl;
 
 import com.example.demo.entity.Location;
 import com.example.demo.entity.Sensor;
-import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.LocationRepository;
 import com.example.demo.repository.SensorRepository;
 import com.example.demo.service.SensorService;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class SensorServiceimpl implements SensorService {
@@ -16,7 +13,6 @@ public class SensorServiceimpl implements SensorService {
     private final SensorRepository sensorRepository;
     private final LocationRepository locationRepository;
 
-    // 👇 constructor name MUST be SAME as class name
     public SensorServiceimpl(SensorRepository sensorRepository,
                              LocationRepository locationRepository) {
         this.sensorRepository = sensorRepository;
@@ -25,26 +21,10 @@ public class SensorServiceimpl implements SensorService {
 
     @Override
     public Sensor createSensor(Long locationId, Sensor sensor) {
-
-        if (sensor.getSensorType() == null) {
-            throw new IllegalArgumentException("sensorType required");
-        }
-
         Location location = locationRepository.findById(locationId)
-                .orElseThrow(() -> new ResourceNotFoundException("Location not found"));
+                .orElseThrow(() -> new RuntimeException("Location not found"));
 
         sensor.setLocation(location);
         return sensorRepository.save(sensor);
-    }
-
-    @Override
-    public Sensor getSensor(Long id) {
-        return sensorRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Sensor not found"));
-    }
-
-    @Override
-    public List<Sensor> getAllSensors() {
-        return sensorRepository.findAll();
     }
 }
