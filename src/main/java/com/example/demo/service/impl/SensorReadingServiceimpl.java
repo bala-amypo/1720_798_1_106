@@ -11,13 +11,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class SensorReadingServiceimpl implements SensorReadingService {
+public class SensorReadingServiceImpl implements SensorReadingService {
 
     private final SensorReadingRepository readingRepository;
     private final SensorRepository sensorRepository;
 
-    // ✅ Constructor order EXACT
-    public SensorReadingServiceimpl(SensorReadingRepository readingRepository,
+    public SensorReadingServiceImpl(SensorReadingRepository readingRepository,
                                     SensorRepository sensorRepository) {
         this.readingRepository = readingRepository;
         this.sensorRepository = sensorRepository;
@@ -27,17 +26,23 @@ public class SensorReadingServiceimpl implements SensorReadingService {
     public SensorReading submitReading(Long sensorId, SensorReading reading) {
 
         if (reading.getReadingValue() == null) {
-            throw new IllegalArgumentException("readingvalue missing");
+            throw new IllegalArgumentException("readingValue is required");
         }
 
-        if (reading.getReadingTime().isAfter(LocalDateTime.now())) {
-            throw new IllegalArgumentException("future date not allowed");
+        if (reading.getReadingTime() == null) {
+            reading.setReadingTime(LocalDateTime.now());
+        } else if (reading.getReadingTime().isAfter(LocalDateTime.now())) {
+            throw new IllegalArgumentException("readingTime cannot be in the future");
         }
 
         Sensor sensor = sensorRepository.findById(sensorId)
                 .orElseThrow(() -> new ResourceNotFoundException("Sensor not found"));
 
         reading.setSensor(sensor);
+        if (reading.getStatus() == null) {
+            reading.setStatus("PENDING");
+        }
+
         return readingRepository.save(reading);
     }
 
