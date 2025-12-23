@@ -11,20 +11,13 @@ public class ComplianceThreshold {
     private Long id;
 
     private String sensorType;
+
     private Double minValue;
     private Double maxValue;
+
     private String severityLevel;
-    private LocalDateTime createdAt = LocalDateTime.now();
 
-    public Double getMinValue() {
-        return minValue;
-    }
+    private LocalDateTime createdAt;
 
-    public Double getMaxValue() {
-        return maxValue;
-    }
-
-    public String getSeverityLevel() {
-        return severityLevel;
-    }
+    // getters and setters
 }
