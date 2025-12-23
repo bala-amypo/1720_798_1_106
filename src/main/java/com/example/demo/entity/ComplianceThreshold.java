@@ -10,15 +10,17 @@ public class ComplianceThreshold {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String sensorType;
+
     private Double minValue;
     private Double maxValue;
     private String severityLevel;
-    private LocalDateTime createdAt;
 
-    // 🔹 getters & setters
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    // Getters & Setters
     public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
 
     public String getSensorType() { return sensorType; }
     public void setSensorType(String sensorType) { this.sensorType = sensorType; }
