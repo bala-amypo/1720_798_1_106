@@ -1,8 +1,9 @@
-package com.example.demo.service;
+package com.example.demo.service.impl;
 
 import com.example.demo.entity.ComplianceThreshold;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.ComplianceThresholdRepository;
+import com.example.demo.service.ComplianceThresholdService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,41 +11,46 @@ import java.util.List;
 @Service
 public class ComplianceThresholdServiceimpl implements ComplianceThresholdService {
 
-    private final ComplianceThresholdRepository thresholdRepository;
+    private final ComplianceThresholdRepository complianceThresholdRepository;
 
-    // ✅ Constructor order EXACT
-    public ComplianceThresholdServiceimpl(ComplianceThresholdRepository thresholdRepository) {
-        this.thresholdRepository = thresholdRepository;
+    public ComplianceThresholdServiceimpl(ComplianceThresholdRepository complianceThresholdRepository) {
+        this.complianceThresholdRepository = complianceThresholdRepository;
     }
 
     @Override
     public ComplianceThreshold createThreshold(ComplianceThreshold threshold) {
-
-        if (threshold.getMinValue() >= threshold.getMaxValue()) {
-            throw new IllegalArgumentException("minvalue invalid");
-        }
-
-        if (threshold.getSeverityLevel() == null || threshold.getSeverityLevel().isEmpty()) {
-            throw new IllegalArgumentException("severityLevel required");
-        }
-
-        return thresholdRepository.save(threshold);
+        return complianceThresholdRepository.save(threshold);
     }
 
     @Override
-    public ComplianceThreshold getThreshold(Long id) {
-        return thresholdRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Threshold not found"));
+    public ComplianceThreshold getThresholdById(Long id) {
+        return complianceThresholdRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Threshold not found with id: " + id));
     }
 
     @Override
     public ComplianceThreshold getThresholdBySensorType(String sensorType) {
-        return thresholdRepository.findBySensorType(sensorType)
-                .orElseThrow(() -> new ResourceNotFoundException("Threshold not found"));
+        return complianceThresholdRepository.findBySensorType(sensorType)
+                .orElseThrow(() -> new ResourceNotFoundException("Threshold not found for sensor type: " + sensorType));
     }
 
     @Override
     public List<ComplianceThreshold> getAllThresholds() {
-        return thresholdRepository.findAll();
+        return complianceThresholdRepository.findAll();
+    }
+
+    @Override
+    public ComplianceThreshold updateThreshold(Long id, ComplianceThreshold updatedThreshold) {
+        ComplianceThreshold existing = getThresholdById(id);
+        existing.setMinValue(updatedThreshold.getMinValue());
+        existing.setMaxValue(updatedThreshold.getMaxValue());
+        existing.setSensorType(updatedThreshold.getSensorType());
+        return complianceThresholdRepository.save(existing);
+    }
+
+    @Override
+    public void deleteThreshold(Long id) {
+        ComplianceThreshold existing = getThresholdById(id);
+        complianceThresholdRepository.delete(existing);
     }
 }
