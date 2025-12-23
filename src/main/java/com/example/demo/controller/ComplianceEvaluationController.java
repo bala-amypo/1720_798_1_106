@@ -1,28 +1,34 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.ComplianceLog;
+import com.example.demo.service.ComplianceEvaluationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/compliance")
 @Tag(name = "Compliance Evaluation Endpoints")
 public class ComplianceEvaluationController {
 
-    // POST: evaluate reading and create log
+    private final ComplianceEvaluationService complianceEvaluationService;
+
+    public ComplianceEvaluationController(
+            ComplianceEvaluationService complianceEvaluationService) {
+        this.complianceEvaluationService = complianceEvaluationService;
+    }
+
+    // 🔹 NO REQUEST BODY (CORRECT)
     @PostMapping("/evaluate/{readingId}")
-    public String evaluateReading(@PathVariable Long readingId) {
+    public String evaluate(@PathVariable Long readingId) {
+        complianceEvaluationService.evaluateReading(readingId);
         return "Compliance evaluated for readingId: " + readingId;
     }
 
-    // GET: list logs for a reading
+    // 🔹 THIS RETURNS JSON OUTPUT
     @GetMapping("/reading/{readingId}")
-    public String getLogsByReading(@PathVariable Long readingId) {
-        return "Logs for readingId: " + readingId;
-    }
-
-    // GET: get single log by id
-    @GetMapping("/{id}")
-    public String getLogById(@PathVariable Long id) {
-        return "Compliance log with id: " + id;
+    public List<ComplianceLog> getLogs(@PathVariable Long readingId) {
+        return complianceEvaluationService.getLogsByReading(readingId);
     }
 }
