@@ -6,6 +6,7 @@ import com.example.demo.repository.ComplianceThresholdRepository;
 import com.example.demo.service.ComplianceThresholdService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -19,6 +20,7 @@ public class ComplianceThresholdServiceimpl implements ComplianceThresholdServic
 
     @Override
     public ComplianceThreshold createThreshold(ComplianceThreshold threshold) {
+        threshold.setCreatedAt(LocalDateTime.now());
         return complianceThresholdRepository.save(threshold);
     }
 
@@ -42,9 +44,10 @@ public class ComplianceThresholdServiceimpl implements ComplianceThresholdServic
     @Override
     public ComplianceThreshold updateThreshold(Long id, ComplianceThreshold updatedThreshold) {
         ComplianceThreshold existing = getThreshold(id);
+        existing.setSensorType(updatedThreshold.getSensorType());
         existing.setMinValue(updatedThreshold.getMinValue());
         existing.setMaxValue(updatedThreshold.getMaxValue());
-        existing.setSensorType(updatedThreshold.getSensorType());
+        existing.setSeverityLevel(updatedThreshold.getSeverityLevel());
         return complianceThresholdRepository.save(existing);
     }
 
