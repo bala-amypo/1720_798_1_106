@@ -17,11 +17,11 @@ public class SensorReading {
     private Double readingValue;
 
     @Column(nullable = false)
-    private LocalDateTime readingTime;
+    private LocalDateTime readingTime = LocalDateTime.now();
 
     private String status = "PENDING"; // default
 
-    // Getters and Setters
+    // Getters & Setters
     public Long getId() { return id; }
 
     public Sensor getSensor() { return sensor; }
