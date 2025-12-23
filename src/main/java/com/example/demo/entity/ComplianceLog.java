@@ -17,22 +17,10 @@ public class ComplianceLog {
     private ComplianceThreshold thresholdUsed;
 
     private String statusAssigned;
+
     private String remarks;
-    private LocalDateTime loggedAt = LocalDateTime.now();
 
-    public void setSensorReading(SensorReading sensorReading) {
-        this.sensorReading = sensorReading;
-    }
+    private LocalDateTime loggedAt;
 
-    public void setThresholdUsed(ComplianceThreshold thresholdUsed) {
-        this.thresholdUsed = thresholdUsed;
-    }
-
-    public void setStatusAssigned(String statusAssigned) {
-        this.statusAssigned = statusAssigned;
-    }
-
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
-    }
+    // getters and setters
 }
