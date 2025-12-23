@@ -1,50 +1,61 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.Sensor;
 import com.example.demo.entity.SensorReading;
-import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.entity.ComplianceThreshold;
 import com.example.demo.repository.SensorReadingRepository;
-import com.example.demo.repository.SensorRepository;
 import com.example.demo.service.SensorReadingService;
+import com.example.demo.service.ComplianceThresholdService;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class SensorReadingServiceimpl implements SensorReadingService {
+public class SensorReadingServiceImpl implements SensorReadingService {
 
-    private final SensorReadingRepository readingRepository;
-    private final SensorRepository sensorRepository;
+    private final SensorReadingRepository sensorReadingRepository;
+    private final ComplianceThresholdService complianceThresholdService;
 
-    public SensorReadingServiceimpl(SensorReadingRepository readingRepository,
-                                    SensorRepository sensorRepository) {
-        this.readingRepository = readingRepository;
-        this.sensorRepository = sensorRepository;
+    public SensorReadingServiceImpl(SensorReadingRepository sensorReadingRepository,
+                                    ComplianceThresholdService complianceThresholdService) {
+        this.sensorReadingRepository = sensorReadingRepository;
+        this.complianceThresholdService = complianceThresholdService;
     }
 
     @Override
     public SensorReading submitReading(Long sensorId, SensorReading reading) {
-        if (reading.getReadingValue() == null) throw new IllegalArgumentException("readingValue is required");
-        if (reading.getReadingTime() == null) reading.setReadingTime(LocalDateTime.now());
-        else if (reading.getReadingTime().isAfter(LocalDateTime.now())) throw new IllegalArgumentException("readingTime cannot be in the future");
+        // 1️⃣ Assign sensorId
+        reading.getSensor().setId(sensorId);
 
-        Sensor sensor = sensorRepository.findById(sensorId)
-                .orElseThrow(() -> new ResourceNotFoundException("Sensor not found"));
+        // 2️⃣ Set reading time if not set
+        if (reading.getReadingTime() == null) {
+            reading.setReadingTime(LocalDateTime.now());
+        }
 
-        reading.setSensor(sensor);
-        if (reading.getStatus() == null) reading.setStatus("PENDING");
+        // 3️⃣ Get threshold for this sensor type
+        ComplianceThreshold threshold = complianceThresholdService
+                .getThresholdBySensorType(reading.getSensor().getSensorType());
 
-        return readingRepository.save(reading);
+        // 4️⃣ Check compliance
+        if (reading.getReadingValue() >= threshold.getMinValue() &&
+            reading.getReadingValue() <= threshold.getMaxValue()) {
+            reading.setStatus("COMPLIANT");
+        } else {
+            reading.setStatus("NON-COMPLIANT");
+        }
+
+        // 5️⃣ Save and return
+        return sensorReadingRepository.save(reading);
     }
 
     @Override
     public SensorReading getReading(Long id) {
-        return readingRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Reading not found"));
+        return sensorReadingRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Reading not found with id: " + id));
     }
 
     @Override
     public List<SensorReading> getReadingsBySensor(Long sensorId) {
-        return readingRepository.findBySensor_Id(sensorId);
+        return sensorReadingRepository.findBySensorId(sensorId);
     }
 }
