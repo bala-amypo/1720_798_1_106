@@ -1,7 +1,7 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Sensor {
@@ -10,27 +10,24 @@ public class Sensor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
-    private String sensorCode;
-
+    @Column(nullable = false)
     private String sensorType;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Location location;
 
-    private LocalDateTime installedAt = LocalDateTime.now();
+    @OneToMany(mappedBy = "sensor")
+    private List<SensorReading> readings;
 
-    private Boolean isActive = true;
+    // Getters & Setters
+    public Long getId() { return id; }
 
-    public Long getId() {
-        return id;
-    }
+    public String getSensorType() { return sensorType; }
+    public void setSensorType(String sensorType) { this.sensorType = sensorType; }
 
-    public String getSensorType() {
-        return sensorType;
-    }
+    public Location getLocation() { return location; }
+    public void setLocation(Location location) { this.location = location; }
 
-    public void setLocation(Location location) {
-        this.location = location;
-    }
+    public List<SensorReading> getReadings() { return readings; }
+    public void setReadings(List<SensorReading> readings) { this.readings = readings; }
 }
