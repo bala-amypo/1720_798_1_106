@@ -1,8 +1,10 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.entity.SensorReading;
+import com.example.demo.entity.Sensor;
 import com.example.demo.entity.ComplianceThreshold;
 import com.example.demo.repository.SensorReadingRepository;
+import com.example.demo.repository.SensorRepository;
 import com.example.demo.service.SensorReadingService;
 import com.example.demo.service.ComplianceThresholdService;
 import org.springframework.stereotype.Service;
@@ -11,30 +13,34 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class SensorReadingServiceImpl implements SensorReadingService {
+public class SensorReadingServiceimpl implements SensorReadingService {
 
     private final SensorReadingRepository sensorReadingRepository;
     private final ComplianceThresholdService complianceThresholdService;
+    private final SensorRepository sensorRepository;
 
-    public SensorReadingServiceImpl(SensorReadingRepository sensorReadingRepository,
-                                    ComplianceThresholdService complianceThresholdService) {
+    public SensorReadingServiceimpl(SensorReadingRepository sensorReadingRepository,
+                                    ComplianceThresholdService complianceThresholdService,
+                                    SensorRepository sensorRepository) {
         this.sensorReadingRepository = sensorReadingRepository;
         this.complianceThresholdService = complianceThresholdService;
+        this.sensorRepository = sensorRepository;
     }
 
     @Override
     public SensorReading submitReading(Long sensorId, SensorReading reading) {
-        // 1️⃣ Assign sensorId
-        reading.getSensor().setId(sensorId);
+        // 1️⃣ Get sensor object
+        Sensor sensor = sensorRepository.findById(sensorId)
+                .orElseThrow(() -> new RuntimeException("Sensor not found with id: " + sensorId));
+        reading.setSensor(sensor);
 
-        // 2️⃣ Set reading time if not set
+        // 2️⃣ Set reading time if missing
         if (reading.getReadingTime() == null) {
             reading.setReadingTime(LocalDateTime.now());
         }
 
-        // 3️⃣ Get threshold for this sensor type
-        ComplianceThreshold threshold = complianceThresholdService
-                .getThresholdBySensorType(reading.getSensor().getSensorType());
+        // 3️⃣ Get threshold for sensor type
+        ComplianceThreshold threshold = complianceThresholdService.getThresholdBySensorType(sensor.getSensorType());
 
         // 4️⃣ Check compliance
         if (reading.getReadingValue() >= threshold.getMinValue() &&
@@ -44,7 +50,7 @@ public class SensorReadingServiceImpl implements SensorReadingService {
             reading.setStatus("NON-COMPLIANT");
         }
 
-        // 5️⃣ Save and return
+        // 5️⃣ Save and return reading
         return sensorReadingRepository.save(reading);
     }
 
