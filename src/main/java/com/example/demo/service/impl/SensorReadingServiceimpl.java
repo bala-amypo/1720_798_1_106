@@ -1,7 +1,7 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.SensorReading;
 import com.example.demo.entity.Sensor;
+import com.example.demo.entity.SensorReading;
 import com.example.demo.entity.ComplianceThreshold;
 import com.example.demo.repository.SensorReadingRepository;
 import com.example.demo.repository.SensorRepository;
@@ -29,20 +29,20 @@ public class SensorReadingServiceimpl implements SensorReadingService {
 
     @Override
     public SensorReading submitReading(Long sensorId, SensorReading reading) {
-        // 1️⃣ Get sensor object
+        // Get sensor
         Sensor sensor = sensorRepository.findById(sensorId)
                 .orElseThrow(() -> new RuntimeException("Sensor not found with id: " + sensorId));
         reading.setSensor(sensor);
 
-        // 2️⃣ Set reading time if missing
+        // Set reading time
         if (reading.getReadingTime() == null) {
             reading.setReadingTime(LocalDateTime.now());
         }
 
-        // 3️⃣ Get threshold for sensor type
+        // Get threshold
         ComplianceThreshold threshold = complianceThresholdService.getThresholdBySensorType(sensor.getSensorType());
 
-        // 4️⃣ Check compliance
+        // Set compliance status
         if (reading.getReadingValue() >= threshold.getMinValue() &&
             reading.getReadingValue() <= threshold.getMaxValue()) {
             reading.setStatus("COMPLIANT");
@@ -50,7 +50,6 @@ public class SensorReadingServiceimpl implements SensorReadingService {
             reading.setStatus("NON-COMPLIANT");
         }
 
-        // 5️⃣ Save and return reading
         return sensorReadingRepository.save(reading);
     }
 
