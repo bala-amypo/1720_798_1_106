@@ -7,6 +7,7 @@ import com.example.demo.service.ComplianceThresholdService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ComplianceThresholdServiceimpl implements ComplianceThresholdService {
@@ -23,7 +24,7 @@ public class ComplianceThresholdServiceimpl implements ComplianceThresholdServic
     }
 
     @Override
-    public ComplianceThreshold getThresholdById(Long id) {
+    public ComplianceThreshold getThreshold(Long id) {
         return complianceThresholdRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Threshold not found with id: " + id));
     }
@@ -41,7 +42,7 @@ public class ComplianceThresholdServiceimpl implements ComplianceThresholdServic
 
     @Override
     public ComplianceThreshold updateThreshold(Long id, ComplianceThreshold updatedThreshold) {
-        ComplianceThreshold existing = getThresholdById(id);
+        ComplianceThreshold existing = getThreshold(id);
         existing.setMinValue(updatedThreshold.getMinValue());
         existing.setMaxValue(updatedThreshold.getMaxValue());
         existing.setSensorType(updatedThreshold.getSensorType());
@@ -50,7 +51,7 @@ public class ComplianceThresholdServiceimpl implements ComplianceThresholdServic
 
     @Override
     public void deleteThreshold(Long id) {
-        ComplianceThreshold existing = getThresholdById(id);
+        ComplianceThreshold existing = getThreshold(id);
         complianceThresholdRepository.delete(existing);
     }
 }
