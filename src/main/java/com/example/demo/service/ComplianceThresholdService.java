@@ -12,4 +12,8 @@ public interface ComplianceThresholdService {
     ComplianceThreshold getThresholdBySensorType(String sensorType);
 
     List<ComplianceThreshold> getAllThresholds();
+
+    ComplianceThreshold updateThreshold(Long id, ComplianceThreshold updatedThreshold);
+
+    void deleteThreshold(Long id);
 }
