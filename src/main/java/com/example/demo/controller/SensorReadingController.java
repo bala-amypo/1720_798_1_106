@@ -12,25 +12,28 @@ import java.util.List;
 @Tag(name = "Sensor Readings Endpoints")
 public class SensorReadingController {
 
-    private final SensorReadingService readingService;
+    private final SensorReadingService sensorReadingService;
 
-    public SensorReadingController(SensorReadingService readingService) {
-        this.readingService = readingService;
+    public SensorReadingController(SensorReadingService sensorReadingService) {
+        this.sensorReadingService = sensorReadingService;
     }
 
+    // Submit a new reading
     @PostMapping("/{sensorId}")
     public SensorReading submitReading(@PathVariable Long sensorId,
                                        @RequestBody SensorReading reading) {
-        return readingService.submitReading(sensorId, reading);
+        return sensorReadingService.submitReading(sensorId, reading);
     }
 
+    // Get reading by ID
     @GetMapping("/{id}")
     public SensorReading getReading(@PathVariable Long id) {
-        return readingService.getReading(id);
+        return sensorReadingService.getReading(id);
     }
 
+    // Get all readings for a sensor
     @GetMapping("/sensor/{sensorId}")
     public List<SensorReading> getReadingsBySensor(@PathVariable Long sensorId) {
-        return readingService.getReadingsBySensor(sensorId);
+        return sensorReadingService.getReadingsBySensor(sensorId);
     }
 }
