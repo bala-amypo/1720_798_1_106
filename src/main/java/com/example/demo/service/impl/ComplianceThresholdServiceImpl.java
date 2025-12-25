@@ -10,11 +10,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class ComplianceThresholdServiceimpl implements ComplianceThresholdService {
+public class ComplianceThresholdServiceImpl implements ComplianceThresholdService {
 
     private final ComplianceThresholdRepository complianceThresholdRepository;
 
-    public ComplianceThresholdServiceimpl(ComplianceThresholdRepository complianceThresholdRepository) {
+    public ComplianceThresholdServiceImpl(ComplianceThresholdRepository complianceThresholdRepository) {
         this.complianceThresholdRepository = complianceThresholdRepository;
     }
 
