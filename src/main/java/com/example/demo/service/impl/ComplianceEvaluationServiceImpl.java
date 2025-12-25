@@ -57,4 +57,9 @@ public class ComplianceEvaluationServiceImpl
 
         return logRepo.save(log);
     }
+
+    @Override
+    public List<ComplianceLog> getLogsByReading(Long readingId) {
+        return logRepo.findBySensorReading_Id(readingId);
+    }
 }
