@@ -1,8 +1,4 @@
-package com.example.demo.repository;
-
-import com.example.demo.entity.Sensor;
-import org.springframework.data.jpa.repository.JpaRepository;
-
 public interface SensorRepository extends JpaRepository<Sensor, Long> {
-    // ❌ removed invalid method
+    Optional<Sensor> findBySensorCode(String code);
+    List<Sensor> findByLocation_Region(String region);
 }
