@@ -1,39 +1,54 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 public class ComplianceThreshold {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
-    @Column(nullable = false)
     private String sensorType;
-
     private Double minValue;
     private Double maxValue;
     private String severityLevel;
 
-    private LocalDateTime createdAt = LocalDateTime.now();
+    // ===== GETTERS & SETTERS =====
 
-    // Getters & Setters
-    public Long getId() { return id; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getSensorType() { return sensorType; }
-    public void setSensorType(String sensorType) { this.sensorType = sensorType; }
+    public String getSensorType() {
+        return sensorType;
+    }
 
-    public Double getMinValue() { return minValue; }
-    public void setMinValue(Double minValue) { this.minValue = minValue; }
+    public void setSensorType(String sensorType) {
+        this.sensorType = sensorType;
+    }
 
-    public Double getMaxValue() { return maxValue; }
-    public void setMaxValue(Double maxValue) { this.maxValue = maxValue; }
+    public Double getMinValue() {
+        return minValue;
+    }
 
-    public String getSeverityLevel() { return severityLevel; }
-    public void setSeverityLevel(String severityLevel) { this.severityLevel = severityLevel; }
+    public void setMinValue(Double minValue) {
+        this.minValue = minValue;
+    }
 
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    public Double getMaxValue() {
+        return maxValue;
+    }
+
+    public void setMaxValue(Double maxValue) {
+        this.maxValue = maxValue;
+    }
+
+    public String getSeverityLevel() {
+        return severityLevel;
+    }
+
+    public void setSeverityLevel(String severityLevel) {
+        this.severityLevel = severityLevel;
+    }
 }
