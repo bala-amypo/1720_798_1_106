@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class LocationServiceimpl implements LocationService {
+public class LocationServiceImpl implements LocationService {
 
     private final LocationRepository repository;
 
-    public LocationServiceimpl(LocationRepository repository) {
+    public LocationServiceImpl(LocationRepository repository) {
         this.repository = repository;
     }
 
