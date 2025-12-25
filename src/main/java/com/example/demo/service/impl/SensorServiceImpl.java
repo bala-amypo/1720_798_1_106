@@ -7,32 +7,29 @@ import com.example.demo.repository.SensorRepository;
 import com.example.demo.service.SensorService;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class SensorServiceImpl implements SensorService {
 
-    private final SensorRepository sensorRepository;
-    private final LocationRepository locationRepository;
+    private final SensorRepository sensorRepo;
+    private final LocationRepository locationRepo;
 
-    public SensorServiceImpl(SensorRepository sensorRepository,
-                             LocationRepository locationRepository) {
-        this.sensorRepository = sensorRepository;
-        this.locationRepository = locationRepository;
+    public SensorServiceImpl(SensorRepository sensorRepo,
+                             LocationRepository locationRepo) {
+        this.sensorRepo = sensorRepo;
+        this.locationRepo = locationRepo;
     }
 
     @Override
     public Sensor createSensor(Long locationId, Sensor sensor) {
-        Location location = locationRepository.findById(locationId)
+        Location location = locationRepo.findById(locationId)
                 .orElseThrow(() -> new RuntimeException("Location not found"));
-
         sensor.setLocation(location);
-        return sensorRepository.save(sensor);
+        return sensorRepo.save(sensor);
     }
 
-    // ✅ MISSING METHOD — NOW ADDED
     @Override
-    public List<Sensor> getAllSensors() {
-        return sensorRepository.findAll();
+    public Sensor getSensor(Long id) {
+        return sensorRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Sensor not found"));
     }
 }
