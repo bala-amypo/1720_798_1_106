@@ -7,17 +7,32 @@ import java.time.LocalDateTime;
 public class SensorReading {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Double readingValue;
-
-    private String status;
-
-    private LocalDateTime readingTime = LocalDateTime.now();
-
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Sensor sensor;
 
-    // getters & setters
+    @Column(nullable = false)
+    private Double readingValue;
+
+    @Column(nullable = false)
+    private LocalDateTime readingTime = LocalDateTime.now();
+
+    private String status = "PENDING"; // default
+
+    // Getters & Setters
+    public Long getId() { return id; }
+
+    public Sensor getSensor() { return sensor; }
+    public void setSensor(Sensor sensor) { this.sensor = sensor; }
+
+    public Double getReadingValue() { return readingValue; }
+    public void setReadingValue(Double readingValue) { this.readingValue = readingValue; }
+
+    public LocalDateTime getReadingTime() { return readingTime; }
+    public void setReadingTime(LocalDateTime readingTime) { this.readingTime = readingTime; }
+
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 }
