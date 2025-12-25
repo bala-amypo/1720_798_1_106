@@ -1,33 +1,59 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import java.util.List;
 
 @Entity
 public class Sensor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
-    @Column(nullable = false)
+    @Column(unique = true)
+    private String sensorCode;
+
     private String sensorType;
 
-    @ManyToOne(optional = false)
+    private Boolean isActive = true;
+
+    @ManyToOne
     private Location location;
 
-    @OneToMany(mappedBy = "sensor")
-    private List<SensorReading> readings;
+    // ===== GETTERS & SETTERS =====
 
-    // Getters & Setters
-    public Long getId() { return id; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getSensorType() { return sensorType; }
-    public void setSensorType(String sensorType) { this.sensorType = sensorType; }
+    public String getSensorCode() {
+        return sensorCode;
+    }
 
-    public Location getLocation() { return location; }
-    public void setLocation(Location location) { this.location = location; }
+    public void setSensorCode(String sensorCode) {
+        this.sensorCode = sensorCode;
+    }
 
-    public List<SensorReading> getReadings() { return readings; }
-    public void setReadings(List<SensorReading> readings) { this.readings = readings; }
+    public String getSensorType() {
+        return sensorType;
+    }
+
+    public void setSensorType(String sensorType) {
+        this.sensorType = sensorType;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean active) {
+        isActive = active;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 }
