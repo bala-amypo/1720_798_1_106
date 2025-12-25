@@ -13,13 +13,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class SensorReadingServiceimpl implements SensorReadingService {
+public class SensorReadingServiceImpl implements SensorReadingService {
 
     private final SensorReadingRepository sensorReadingRepository;
     private final ComplianceThresholdService complianceThresholdService;
     private final SensorRepository sensorRepository;
 
-    public SensorReadingServiceimpl(SensorReadingRepository sensorReadingRepository,
+    public SensorReadingServiceImpl(SensorReadingRepository sensorReadingRepository,
                                     ComplianceThresholdService complianceThresholdService,
                                     SensorRepository sensorRepository) {
         this.sensorReadingRepository = sensorReadingRepository;
