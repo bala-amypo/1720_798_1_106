@@ -6,22 +6,31 @@ import jakarta.persistence.*;
 public class Location {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
-    private String name;
+    private String locationName;
+    private String region;
 
-    public Location() {}
+    // ===== GETTERS & SETTERS =====
 
-    public Location(String name) {
-        this.name = name;
+    public Long getId() {
+        return id;
     }
 
-    public Long getId() { return id; }
+    public String getLocationName() {
+        return locationName;
+    }
 
-    public void setId(Long id) { this.id = id; }
+    public void setLocationName(String locationName) {
+        this.locationName = locationName;
+    }
 
-    public String getName() { return name; }
+    public String getRegion() {
+        return region;
+    }
 
-    public void setName(String name) { this.name = name; }
+    public void setRegion(String region) {
+        this.region = region;
+    }
 }
