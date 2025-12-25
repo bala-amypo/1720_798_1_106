@@ -34,11 +34,9 @@ public class ComplianceEvaluationServiceImpl
         List<ComplianceLog> existing =
                 logRepo.findBySensorReading_Id(readingId);
 
-        if (!existing.isEmpty()) {
-            return existing.get(0);
-        }
+        if (!existing.isEmpty()) return existing.get(0);
 
-        ComplianceThreshold threshold =
+        ComplianceThreshold t =
                 thresholdRepo.findBySensorType(
                         reading.getSensor().getSensorType())
                         .orElseThrow(() -> new RuntimeException("not found"));
@@ -46,8 +44,8 @@ public class ComplianceEvaluationServiceImpl
         ComplianceLog log = new ComplianceLog();
         log.setSensorReading(reading);
 
-        if (reading.getReadingValue() < threshold.getMinValue()
-                || reading.getReadingValue() > threshold.getMaxValue()) {
+        if (reading.getReadingValue() < t.getMinValue()
+                || reading.getReadingValue() > t.getMaxValue()) {
             log.setStatusAssigned("UNSAFE");
             reading.setStatus("UNSAFE");
         } else {
