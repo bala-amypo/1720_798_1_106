@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class SensorServiceimpl implements SensorService {
+public class SensorServiceImpl implements SensorService {
 
     private final SensorRepository sensorRepository;
     private final LocationRepository locationRepository;
 
-    public SensorServiceimpl(SensorRepository sensorRepository,
+    public SensorServiceImpl(SensorRepository sensorRepository,
                              LocationRepository locationRepository) {
         this.sensorRepository = sensorRepository;
         this.locationRepository = locationRepository;
