@@ -1,10 +1,25 @@
-package com.example.demo.service;
+package com.example.demo.entity;
 
-import com.example.demo.entity.Location;
+import jakarta.persistence.*;
 
-public interface LocationService {
+@Entity
+public class Location {
 
-    Location createLocation(Location location);
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    Location getLocation(Long id);
+    private String locationName;
+    private String region;
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getLocationName() { return locationName; }
+    public void setLocationName(String locationName) {
+        this.locationName = locationName;
+    }
+
+    public String getRegion() { return region; }
+    public void setRegion(String region) { this.region = region; }
 }
