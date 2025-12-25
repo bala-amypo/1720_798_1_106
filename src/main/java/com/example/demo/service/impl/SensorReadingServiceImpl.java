@@ -19,6 +19,7 @@ public class SensorReadingServiceImpl implements SensorReadingService {
         this.sensorRepo = sensorRepo;
     }
 
+    // ✅ METHOD 1 (already required)
     @Override
     public SensorReading submitReading(Long sensorId, SensorReading reading) {
         Sensor sensor = sensorRepo.findById(sensorId)
@@ -26,5 +27,12 @@ public class SensorReadingServiceImpl implements SensorReadingService {
 
         reading.setSensor(sensor);
         return readingRepo.save(reading);
+    }
+
+    // ✅ METHOD 2 (THIS WAS MISSING)
+    @Override
+    public SensorReading getReading(Long id) {
+        return readingRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Reading not found"));
     }
 }
