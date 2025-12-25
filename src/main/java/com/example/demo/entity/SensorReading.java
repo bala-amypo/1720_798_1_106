@@ -7,32 +7,57 @@ import java.time.LocalDateTime;
 public class SensorReading {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
-    @ManyToOne(optional = false)
-    private Sensor sensor;
-
-    @Column(nullable = false)
     private Double readingValue;
 
-    @Column(nullable = false)
-    private LocalDateTime readingTime = LocalDateTime.now();
+    private String status;
 
-    private String status = "PENDING"; // default
+    private LocalDateTime readingTime;
 
-    // Getters & Setters
-    public Long getId() { return id; }
+    @ManyToOne
+    private Sensor sensor;
 
-    public Sensor getSensor() { return sensor; }
-    public void setSensor(Sensor sensor) { this.sensor = sensor; }
+    // ===== GETTERS & SETTERS =====
 
-    public Double getReadingValue() { return readingValue; }
-    public void setReadingValue(Double readingValue) { this.readingValue = readingValue; }
+    public Long getId() {
+        return id;
+    }
 
-    public LocalDateTime getReadingTime() { return readingTime; }
-    public void setReadingTime(LocalDateTime readingTime) { this.readingTime = readingTime; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public Double getReadingValue() {
+        return readingValue;
+    }
+
+    public void setReadingValue(Double readingValue) {
+        this.readingValue = readingValue;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getReadingTime() {
+        return readingTime;
+    }
+
+    public void setReadingTime(LocalDateTime readingTime) {
+        this.readingTime = readingTime;
+    }
+
+    public Sensor getSensor() {
+        return sensor;
+    }
+
+    public void setSensor(Sensor sensor) {
+        this.sensor = sensor;
+    }
 }
