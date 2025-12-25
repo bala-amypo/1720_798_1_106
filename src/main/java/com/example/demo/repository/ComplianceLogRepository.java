@@ -8,5 +8,5 @@ import java.util.List;
 public interface ComplianceLogRepository
         extends JpaRepository<ComplianceLog, Long> {
 
-    List<ComplianceLog> findByReadingId(Long readingId);
+    List<ComplianceLog> findBySensorReading_Id(Long readingId);
 }
