@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 public class ComplianceThreshold {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String sensorType;
@@ -14,40 +14,24 @@ public class ComplianceThreshold {
     private Double maxValue;
     private String severityLevel;
 
-    // ===== GETTERS & SETTERS =====
+    public Long getId() { return id; }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getSensorType() {
-        return sensorType;
-    }
-
+    public String getSensorType() { return sensorType; }
     public void setSensorType(String sensorType) {
         this.sensorType = sensorType;
     }
 
-    public Double getMinValue() {
-        return minValue;
-    }
-
+    public Double getMinValue() { return minValue; }
     public void setMinValue(Double minValue) {
         this.minValue = minValue;
     }
 
-    public Double getMaxValue() {
-        return maxValue;
-    }
-
+    public Double getMaxValue() { return maxValue; }
     public void setMaxValue(Double maxValue) {
         this.maxValue = maxValue;
     }
 
-    public String getSeverityLevel() {
-        return severityLevel;
-    }
-
+    public String getSeverityLevel() { return severityLevel; }
     public void setSeverityLevel(String severityLevel) {
         this.severityLevel = severityLevel;
     }
