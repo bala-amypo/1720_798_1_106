@@ -1,4 +1,4 @@
-public interface ComplianceThresholdRepository
-        extends JpaRepository<ComplianceThreshold, Long> {
-    Optional<ComplianceThreshold> findBySensorType(String type);
+public interface ComplianceLogRepository
+        extends JpaRepository<ComplianceLog, Long> {
+    List<ComplianceLog> findBySensorReading_Id(Long id);
 }
