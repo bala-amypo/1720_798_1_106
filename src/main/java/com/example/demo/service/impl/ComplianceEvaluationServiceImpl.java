@@ -2,10 +2,14 @@ package com.example.demo.service.impl;
 
 import com.example.demo.entity.*;
 import com.example.demo.repository.*;
+import com.example.demo.service.ComplianceEvaluationService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public class ComplianceEvaluationServiceImpl {
+@Service
+public class ComplianceEvaluationServiceImpl
+        implements ComplianceEvaluationService {
 
     private final SensorReadingRepository readingRepo;
     private final ComplianceThresholdRepository thresholdRepo;
@@ -21,6 +25,7 @@ public class ComplianceEvaluationServiceImpl {
         this.logRepo = logRepo;
     }
 
+    @Override
     public ComplianceLog evaluateReading(Long readingId) {
 
         SensorReading reading = readingRepo.findById(readingId)
