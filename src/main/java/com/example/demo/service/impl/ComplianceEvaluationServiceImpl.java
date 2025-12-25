@@ -14,13 +14,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class ComplianceEvaluationServiceimpl implements ComplianceEvaluationService {
+public class ComplianceEvaluationServiceImpl implements ComplianceEvaluationService {
 
     private final SensorReadingRepository sensorReadingRepository;
     private final ComplianceThresholdRepository complianceThresholdRepository;
     private final ComplianceLogRepository complianceLogRepository;
 
-    public ComplianceEvaluationServiceimpl(
+    public ComplianceEvaluationServiceImpl(
             SensorReadingRepository sensorReadingRepository,
             ComplianceThresholdRepository complianceThresholdRepository,
             ComplianceLogRepository complianceLogRepository) {
