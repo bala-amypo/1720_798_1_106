@@ -3,5 +3,8 @@ package com.example.demo.service;
 import com.example.demo.entity.SensorReading;
 
 public interface SensorReadingService {
-    SensorReading save(SensorReading reading);
+
+    SensorReading submitReading(Long sensorId, SensorReading reading);
+
+    SensorReading getReading(Long readingId);
 }
