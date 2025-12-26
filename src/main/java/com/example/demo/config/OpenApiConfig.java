@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.List;
 
 @Configuration
-public class SwaggerConfig {
+public class OpenApiConfig {
 
     @Bean
     public OpenAPI customOpenAPI() {
@@ -31,7 +31,7 @@ public class SwaggerConfig {
         return new OpenAPI()
                 // Server with port number
                 .servers(List.of(
-                        new Server().url("https://9254.pro604cr.amypo.ai/")
+                        new Server().url("https://9248.pro604cr.amypo.ai/")
                 ))
                 // Swagger Authorize button
                 .components(new Components()
