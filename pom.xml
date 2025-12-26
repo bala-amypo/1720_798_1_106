@@ -28,26 +28,27 @@
 
     <dependencies>
 
-        <!-- Spring Web MVC -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webmvc</artifactId>
-        </dependency>
+        
+       
+            <dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
 
-        <!-- Spring Web MVC Test -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webmvc-test</artifactId>
-            <scope>test</scope>
-        </dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-test</artifactId>
+    <scope>test</scope>
+</dependency>
 
-        <!-- ✅ REQUIRED: BCryptPasswordEncoder -->
+
+     
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-crypto</artifactId>
         </dependency>
 
-        <!-- OpenAPI / Swagger -->
+     
        
 
         <dependency>
@@ -57,7 +58,7 @@
 </dependency>
 
 
-        <!-- TestNG -->
+    
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
@@ -65,7 +66,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Mockito -->
+  
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
@@ -73,7 +74,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- TestNG Surefire Adapter -->
+      
         <dependency>
             <groupId>org.apache.maven.surefire</groupId>
             <artifactId>surefire-testng</artifactId>
