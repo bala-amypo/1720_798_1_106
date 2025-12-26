@@ -15,13 +15,15 @@ public class SensorReadingController {
     }
 
     @PostMapping("/{sensorId}")
-    public SensorReading submitReading(@PathVariable Long sensorId,
-                                       @RequestBody SensorReading reading) {
+    public SensorReading submitReading(
+            @PathVariable Long sensorId,
+            @RequestBody SensorReading reading) {
+
         return sensorReadingService.submitReading(sensorId, reading);
     }
 
-    @GetMapping("/{id}")
-    public SensorReading getReading(@PathVariable Long id) {
-        return sensorReadingService.getReading(id);
+    @GetMapping("/{readingId}")
+    public SensorReading getReading(@PathVariable Long readingId) {
+        return sensorReadingService.getReading(readingId);
     }
 }
