@@ -2,28 +2,21 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.ComplianceLog;
 import com.example.demo.service.ComplianceEvaluationService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/compliance")
 public class ComplianceEvaluationController {
+    private final ComplianceEvaluationService evaluationService;
 
-    private final ComplianceEvaluationService complianceEvaluationService;
-
-    public ComplianceEvaluationController(
-            ComplianceEvaluationService complianceEvaluationService) {
-        this.complianceEvaluationService = complianceEvaluationService;
+    public ComplianceEvaluationController(ComplianceEvaluationService evaluationService) {
+        this.evaluationService = evaluationService;
     }
 
     @PostMapping("/evaluate/{readingId}")
-    public ComplianceLog evaluate(@PathVariable Long readingId) {
-        return complianceEvaluationService.evaluateReading(readingId);
-    }
-
-    @GetMapping("/logs/{readingId}")
-    public List<ComplianceLog> getLogs(@PathVariable Long readingId) {
-        return complianceEvaluationService.getLogsByReading(readingId);
+    public ResponseEntity<ComplianceLog> evaluateReading(@PathVariable Long readingId) {
+        ComplianceLog log = evaluationService.evaluateReading(readingId);
+        return ResponseEntity.ok(log);
     }
 }
