@@ -2,28 +2,27 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.SensorReading;
 import com.example.demo.service.SensorReadingService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/readings")
 public class SensorReadingController {
+    private final SensorReadingService readingService;
 
-    private final SensorReadingService sensorReadingService;
-
-    public SensorReadingController(SensorReadingService sensorReadingService) {
-        this.sensorReadingService = sensorReadingService;
+    public SensorReadingController(SensorReadingService readingService) {
+        this.readingService = readingService;
     }
 
-    @PostMapping("/{sensorId}")
-    public SensorReading submitReading(
-            @PathVariable Long sensorId,
-            @RequestBody SensorReading reading) {
-
-        return sensorReadingService.submitReading(sensorId, reading);
+    @PostMapping("/sensor/{sensorId}")
+    public ResponseEntity<SensorReading> submitReading(@PathVariable Long sensorId, @RequestBody SensorReading reading) {
+        SensorReading created = readingService.submitReading(sensorId, reading);
+        return ResponseEntity.ok(created);
     }
 
-    @GetMapping("/{readingId}")
-    public SensorReading getReading(@PathVariable Long readingId) {
-        return sensorReadingService.getReading(readingId);
+    @GetMapping("/{id}")
+    public ResponseEntity<SensorReading> getReading(@PathVariable Long id) {
+        SensorReading reading = readingService.getReading(id);
+        return ResponseEntity.ok(reading);
     }
 }
