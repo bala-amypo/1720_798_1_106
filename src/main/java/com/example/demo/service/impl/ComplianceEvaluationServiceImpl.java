@@ -4,60 +4,47 @@ import com.example.demo.entity.*;
 import com.example.demo.repository.*;
 import com.example.demo.service.ComplianceEvaluationService;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
-public class ComplianceEvaluationServiceImpl
-        implements ComplianceEvaluationService {
-
-    private final SensorReadingRepository readingRepo;
-    private final ComplianceThresholdRepository thresholdRepo;
-    private final ComplianceLogRepository logRepo;
-
-    public ComplianceEvaluationServiceImpl(
-            SensorReadingRepository readingRepo,
-            ComplianceThresholdRepository thresholdRepo,
-            ComplianceLogRepository logRepo) {
-
-        this.readingRepo = readingRepo;
-        this.thresholdRepo = thresholdRepo;
-        this.logRepo = logRepo;
+public class ComplianceEvaluationServiceImpl implements ComplianceEvaluationService {
+    private final SensorReadingRepository readingRepository;
+    private final ComplianceThresholdRepository thresholdRepository;
+    private final ComplianceLogRepository logRepository;
+    
+    public ComplianceEvaluationServiceImpl(SensorReadingRepository readingRepository, 
+                                         ComplianceThresholdRepository thresholdRepository,
+                                         ComplianceLogRepository logRepository) {
+        this.readingRepository = readingRepository;
+        this.thresholdRepository = thresholdRepository;
+        this.logRepository = logRepository;
     }
-
+    
     @Override
     public ComplianceLog evaluateReading(Long readingId) {
-
-        SensorReading reading = readingRepo.findById(readingId)
-                .orElseThrow(() -> new RuntimeException("not found"));
-
-        List<ComplianceLog> existing =
-                logRepo.findBySensorReading_Id(readingId);
-
-        if (!existing.isEmpty()) return existing.get(0);
-
-        ComplianceThreshold t =
-                thresholdRepo.findBySensorType(
-                        reading.getSensor().getSensorType())
-                        .orElseThrow(() -> new RuntimeException("not found"));
-
+        List<ComplianceLog> existing = logRepository.findBySensorReading_Id(readingId);
+        if (!existing.isEmpty()) {
+            return existing.get(0);
+        }
+        
+        SensorReading reading = readingRepository.findById(readingId)
+            .orElseThrow(() -> new RuntimeException("Reading not found"));
+        
+        ComplianceThreshold threshold = thresholdRepository.findBySensorType(reading.getSensor().getSensorType())
+            .orElseThrow(() -> new RuntimeException("Threshold not found"));
+        
         ComplianceLog log = new ComplianceLog();
         log.setSensorReading(reading);
-
-        if (reading.getReadingValue() < t.getMinValue()
-                || reading.getReadingValue() > t.getMaxValue()) {
+        
+        if (reading.getReadingValue() < threshold.getMinValue() || reading.getReadingValue() > threshold.getMaxValue()) {
             log.setStatusAssigned("UNSAFE");
-            reading.setStatus("UNSAFE");
         } else {
             log.setStatusAssigned("SAFE");
-            reading.setStatus("SAFE");
         }
-
-        return logRepo.save(log);
-    }
-
-    @Override
-    public List<ComplianceLog> getLogsByReading(Long readingId) {
-        return logRepo.findBySensorReading_Id(readingId);
+        
+        reading.setStatus("EVALUATED");
+        readingRepository.save(reading);
+        
+        return logRepository.save(log);
     }
 }
