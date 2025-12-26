@@ -1,11 +1,17 @@
-public interface SensorReadingRepository extends JpaRepository<SensorReading, Long> {
+package com.example.demo.repository;
 
-    // ✅ REQUIRED
-    List<SensorReading> findBySensor_Id(Long sensorId);
+import com.example.demo.entity.SensorReading;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-    // ✅ REQUIRED
-    List<SensorReading> findBySensor_IdAndReadingTimeBetween(
-            Long sensorId,
+import java.time.LocalDateTime;
+import java.util.List;
+
+public interface SensorReadingRepository
+        extends JpaRepository<SensorReading, Long> {
+
+    List<SensorReading> findBySensorId(Long sensorId);
+
+    List<SensorReading> findByReadingTimeBetween(
             LocalDateTime start,
             LocalDateTime end
     );
